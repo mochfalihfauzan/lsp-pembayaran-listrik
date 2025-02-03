@@ -11,8 +11,13 @@ class PelangganController extends Controller
 {
     public function index()
     {
+        // menampilkan data User yang login
         $user = Auth::user();
+
+        // menampilkan data Tarif
         $tarifs = Tarif::all();
+
+        // menampilkan view
         return view('auth-user.register', [
             'user' => $user,
             'tarifs' => $tarifs,
@@ -21,6 +26,7 @@ class PelangganController extends Controller
 
     public function store(Request $request)
     {
+        // validasi data
         $request->validate([
             'username' => 'required|unique:pelanggans',
             'nomor_kwh' => 'required',
@@ -31,6 +37,7 @@ class PelangganController extends Controller
             'password' => 'required',
         ]);
 
+        // menyimpan data ke database
         Pelanggan::create([
             'username' => $request->username,
             'nomor_kwh' => $request->nomor_kwh,
@@ -40,13 +47,20 @@ class PelangganController extends Controller
             'email' => $request->email,
             'password' => $request->password,
         ]);
+
+        // redirect ke halaman dashboard user
         return redirect()->route('dashboard-user');
     }
 
     public function edit($id)
     {
+        // menampilkan data pelanggan berdasarkan id
         $pelanggan = Pelanggan::find($id);
+
+        // menampilkan data tarif
         $tarifs = Tarif::all();
+
+        // menampilkan view
         return view('admin.pelanggan-manage.edit', [
             'pelanggan' => $pelanggan,
             'tarifs' => $tarifs,
@@ -55,6 +69,8 @@ class PelangganController extends Controller
 
     public function update(Request $request, $id)
     {
+
+        // validasi data
         $request->validate([
             'username' => 'required',
             'nomor_kwh' => 'required',
@@ -64,8 +80,10 @@ class PelangganController extends Controller
             'email' => 'required|email',
         ]);
 
+        // mencari data pelanggan berdasarkan id
         $pelanggan = Pelanggan::find($id);
 
+        // mengupdate data pelanggan
         $pelanggan->update([
             'username' => $request->username,
             'nomor_kwh' => $request->nomor_kwh,
@@ -79,8 +97,13 @@ class PelangganController extends Controller
 
     public function destroy($id)
     {
+        // mencari data pelanggan berdasarkan id
         $pelanggan = Pelanggan::find($id);
+
+        // menghapus data pelanggan
         $pelanggan->delete();
+
+
         return redirect()->route('pelanggan')->with('success', 'Pelanggan deleted successfully');
     }
 }
