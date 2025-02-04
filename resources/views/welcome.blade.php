@@ -101,13 +101,29 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item"><a class="nav-link" href="#features">Fitur</a></li>
                     <li class="nav-item"><a class="nav-link" href="#how-it-works">Cara Kerja</a></li>
                     <li class="nav-item"><a class="nav-link" href="#testimonials">Testimoni</a></li>
                     <li class="nav-item"><a class="nav-link" href="#contact">Kontak</a></li>
-                    <li class="nav-item"><a class="nav-link btn btn-light text-primary"
-                            href="{{ route('login') }}">Login</a></li>
+
+                    @if (Auth::check())
+                        @if (Auth::user()->role == 'admin')
+                            <li class="nav-item"><a class="nav-link text-primary" href="{{ route('dashboard-admin') }}">
+                                    <div class="btn btn-success shadow">Dashboard</div>
+                                </a></li>
+                        @else
+                            <li class="nav-item"><a class="nav-link text-primary" href="{{ route('dashboard-user') }}">
+                                    <div class="btn btn-success shadow">Dashboard</div>
+                                </a></li>
+                        @endif
+                    @else
+                        <li class="nav-item"><a class="nav-link btn btn-light text-primary" href="{{ route('login') }}">
+                                <div class="btn btn-success shadow">Login</div>
+                            </a></li>
+
+                    @endif
+
                 </ul>
             </div>
         </div>

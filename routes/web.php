@@ -24,7 +24,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
+
+Route::get('/login', function () {
+    if (auth()->check()) {
+        return redirect()->route('welcome');
+    }
+    return view('auth.login');
+})->name('login');
+
+
 
 Route::get('/register-user', [PelangganController::class, 'index']);
 Route::post('/register-user', [PelangganController::class, 'store']);

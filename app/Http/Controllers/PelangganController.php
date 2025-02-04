@@ -103,7 +103,6 @@ class PelangganController extends Controller
         // menghapus data pelanggan
         $pelanggan->delete();
 
-
         return redirect()->route('pelanggan')->with('success', 'Pelanggan deleted successfully');
     }
 }

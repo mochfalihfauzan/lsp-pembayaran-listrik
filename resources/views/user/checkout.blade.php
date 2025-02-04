@@ -42,8 +42,15 @@
                                         <td><strong> Rp. {{ $pembayaran->total_bayar }}</strong></td>
                                     </tr>
                                 </table>
-                                <button class="btn btn-primary py-3 px-4 shadow fw-bold mt-3" id="pay-button">Bayar
-                                    Tagihan</button>
+                                @if ($pembayaran->tagihan->status == 1)
+                                    <div class="alert alert-success mt-3" role="alert">
+                                        Pembayaran sudah dilakukan
+                                    </div>
+                                @else
+                                    <button class="btn btn-primary py-3 px-4 shadow fw-bold mt-3" id="pay-button">Bayar
+                                        Tagihan</button>
+                                @endif
+
                             </div>
                         </div>
                     </div>
